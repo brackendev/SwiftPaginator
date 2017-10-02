@@ -172,7 +172,7 @@ class SwiftPaginatorAsyncTests: XCTestCase {
     XCTAssertEqual(fetchCallCount, 1, "Fetch Call Count failed, should be 1")
     
     self.waitForExpectations(timeout: 5.1) { error in
-      XCTAssertNil(error, "Something went Horribly Wrong!  \(error)")
+      XCTAssertNil(error, "Something went Horribly Wrong!  \(error?.localizedDescription ?? "Unknown error")")
       
       // verify done
       XCTAssertEqual(self.lipsumPaginator.requestStatus, RequestStatus.done, "Async Results failed, status should be Done")
