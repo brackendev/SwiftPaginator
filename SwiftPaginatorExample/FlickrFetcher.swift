@@ -30,7 +30,7 @@ struct FlickrResults {
 class FlickrFetcher {
   fileprivate class func executeFlickrFetch(query aQuery: String) -> FlickrResults? {
     var query = "\(aQuery)&format=json&nojsoncallback=1&api_key=\(FlickrAPIKey)"
-    query = query.addingPercentEscapes(using: String.Encoding.utf8)!
+    query = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
     
     
     let url = URL(string: query)!

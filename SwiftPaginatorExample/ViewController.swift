@@ -19,7 +19,7 @@ class ViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // in case you don't read the readme file
-    if FlickrAPIKey.characters.count == 0 {
+    if FlickrAPIKey.count == 0 {
       let alertVC = UIAlertController(title: "Empty API Key",
                                       message: "You need to set FlickrAPIKey in FlickrFetcher.swift to test this app",
                                       preferredStyle: .alert)
@@ -39,7 +39,7 @@ class ViewController: UITableViewController {
       let fetchQ = DispatchQueue(label: "Flickr fetcher")
       fetchQ.async {
         let results = FlickrFetcher.photosWithSearchText("paginator", page: page, pageSize: pageSize)
-        print(results)
+        print(results ?? FlickrResults(photos: [], total: 0))
         // go back to main thread before adding results
         DispatchQueue.main.async {
           paginator.received(results: results?.photos ?? [], total: results?.total ?? 0)
@@ -73,7 +73,7 @@ class ViewController: UITableViewController {
     
   }
 
-  func clearButtonPressed(_ sender: UIButton) {
+    @objc func clearButtonPressed(_ sender: UIButton) {
     
   }
   override func didReceiveMemoryWarning() {
@@ -96,7 +96,7 @@ class ViewController: UITableViewController {
     }
     
     let photo = self.flickrPaginator?.results[indexPath.row]
-    if photo?.title.characters.count == 0 {
+    if photo?.title.count == 0 {
       cell?.textLabel?.text = "<no title>"
     } else {
       cell?.textLabel?.text = photo?.title
@@ -137,7 +137,7 @@ class ViewController: UITableViewController {
     footerView.addSubview(label)
     
     // set up activity indicator
-    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let activityIndicatorView = UIActivityIndicatorView(style: .gray)
     activityIndicatorView.center = CGPoint(x: 40, y:22)
     activityIndicatorView.hidesWhenStopped = true
     
